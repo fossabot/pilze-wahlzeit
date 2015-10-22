@@ -121,6 +121,27 @@ public class Photo extends DataObject {
 	 * The default type is jpg
 	 */
 	protected String ending = "jpg";
+
+	/**
+	 * Location as latitude and longitude values
+	 */
+	protected Coordinate location;
+
+
+	/**
+	 * @methodtype set
+	 */
+	public void setLocation(Coordinate location){
+		this.location = location;
+	}
+
+
+	/**
+	 * @methodtype get
+	 */
+	public Coordinate getLocation(){
+		return location;
+	}
 	
 	/**
 	 *
@@ -418,4 +439,5 @@ public class Photo extends DataObject {
 		noVotesAtLastNotification = noVotes;
 		incWriteCount();
 	}
+
 }

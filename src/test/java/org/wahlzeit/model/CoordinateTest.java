@@ -1,0 +1,55 @@
+package org.wahlzeit.model;
+
+import org.junit.Before;
+import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+
+/**
+ * Test cases for the Coordinate class.
+ */
+public class CoordinateTest {
+
+    private Coordinate coordinate;
+    private final static  double DELTA = 0.0000001;
+
+    @Before
+    public void setUp(){
+        coordinate = new Coordinate(1.1,2.2);
+    }
+
+    public void getterSetterTest(){
+        double lat = 99.99;
+        double lng = 88.88;
+        coordinate.setLatitude(lat);
+        coordinate.setLongitude(lng);
+
+        assertEquals(lat,coordinate.getLatitude(),DELTA);
+        assertEquals(lng,coordinate.getLongitude(),DELTA);
+    }
+
+    @Test
+    public void latitudeDistanceTest(){
+        Coordinate secondCoordinate = new Coordinate(5.5,7.7);
+
+        double distance = 4.4;
+        assertEquals(distance,coordinate.getLatitudinalDistance(secondCoordinate),DELTA);
+    }
+
+    @Test
+    public void longitudeDistanceTest(){
+        Coordinate secondCoordinate = new Coordinate(5.5,7.7);
+
+        double distance = 5.5;
+        assertEquals(distance, coordinate.getLongitudinalDistance(secondCoordinate),DELTA);
+    }
+
+    @Test
+    public void distanceTest(){
+        Coordinate otherCoordinate = new Coordinate(10.0,10.0);
+
+        Coordinate distCoord = coordinate.getDistance(otherCoordinate);
+
+        assertEquals(8.9,distCoord.getLatitude(),DELTA);
+        assertEquals(7.8,distCoord.getLongitude(),DELTA);
+    }
+}
