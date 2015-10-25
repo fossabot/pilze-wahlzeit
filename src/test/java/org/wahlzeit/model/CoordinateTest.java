@@ -30,17 +30,20 @@ public class CoordinateTest {
     @Test
     public void latitudeDistanceTest(){
         Coordinate secondCoordinate = new Coordinate(5.5,7.7);
+        assertEquals(4.4,coordinate.getLatitudinalDistance(secondCoordinate),DELTA);
 
-        double distance = 4.4;
-        assertEquals(distance,coordinate.getLatitudinalDistance(secondCoordinate),DELTA);
+        Coordinate thirdCoordinate = new Coordinate(-3.0,1.1);
+        assertEquals(4.1,coordinate.getLatitudinalDistance(thirdCoordinate),DELTA);
+
     }
 
     @Test
     public void longitudeDistanceTest(){
         Coordinate secondCoordinate = new Coordinate(5.5,7.7);
+        assertEquals(5.5, coordinate.getLongitudinalDistance(secondCoordinate),DELTA);
 
-        double distance = 5.5;
-        assertEquals(distance, coordinate.getLongitudinalDistance(secondCoordinate),DELTA);
+        Coordinate thirdCoordinate = new Coordinate(1.5,1.5);
+        assertEquals(0.7, coordinate.getLongitudinalDistance(thirdCoordinate),DELTA);
     }
 
     @Test
