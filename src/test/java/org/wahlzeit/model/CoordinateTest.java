@@ -17,9 +17,10 @@ public class CoordinateTest {
         coordinate = new Coordinate(1.1,2.2);
     }
 
-    public void getterSetterTest(){
-        double lat = 99.99;
-        double lng = 88.88;
+    @Test
+    public void testGetterSetter(){
+        double lat = 30.3;
+        double lng = 40.4;
         coordinate.setLatitude(lat);
         coordinate.setLongitude(lng);
 
@@ -28,7 +29,7 @@ public class CoordinateTest {
     }
 
     @Test
-    public void latitudeDistanceTest(){
+    public void testLatitudeDistance(){
         Coordinate secondCoordinate = new Coordinate(5.5,7.7);
         assertEquals(4.4,coordinate.getLatitudinalDistance(secondCoordinate),DELTA);
 
@@ -38,7 +39,7 @@ public class CoordinateTest {
     }
 
     @Test
-    public void longitudeDistanceTest(){
+    public void testLongitudeDistance(){
         Coordinate secondCoordinate = new Coordinate(5.5,7.7);
         assertEquals(5.5, coordinate.getLongitudinalDistance(secondCoordinate),DELTA);
 
@@ -47,12 +48,22 @@ public class CoordinateTest {
     }
 
     @Test
-    public void distanceTest(){
-        Coordinate otherCoordinate = new Coordinate(10.0,10.0);
+    public void testDistance(){
+        coordinate.setLatitude(49.572680);
+        coordinate.setLongitude(11.028427);
 
-        Coordinate distCoord = coordinate.getDistance(otherCoordinate);
+        Coordinate other = new Coordinate(37.427994,-122.170255);
 
-        assertEquals(8.9,distCoord.getLatitude(),DELTA);
-        assertEquals(7.8,distCoord.getLongitude(),DELTA);
+        assertEquals(9304454.8155896, coordinate.getDistance(other), DELTA);
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testIllegalArgumentsLat(){
+        Coordinate c = new Coordinate(90.1,0);
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testIllegalArgumentsLng(){
+        Coordinate c = new Coordinate(00.0,180.1);
     }
 }
