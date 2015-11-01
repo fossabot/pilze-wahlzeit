@@ -14,6 +14,9 @@ public class Coordinate {
     @Parent
     Key parent = ObjectManager.applicationRootKey;
 
+    static final double DEFAULT_LATITUDE = 0.0;
+    static final double DEFAULT_LONGITUDE = 0.0;
+
     private double latitude;
     private double longitude;
 
