@@ -30,6 +30,9 @@ import java.util.logging.Logger;
 public class PhotoFactory {
 
 	private static final Logger log = Logger.getLogger(PhotoFactory.class.getName());
+
+	public enum TYPE {PHOTO,MUSHROOM}
+
 	/**
 	 * Hidden singleton instance; needs to be initialized from the outside.
 	 */
@@ -75,15 +78,39 @@ public class PhotoFactory {
 	/**
 	 * @methodtype factory
 	 */
-	public Photo createPhoto() {
-		return new Photo();
+	public Photo createPhoto(TYPE type) {
+		switch (type){
+			case MUSHROOM: return new MushroomPhoto();
+			case PHOTO:
+			default: return new Photo();
+
+		}
 	}
 
 	/**
 	 * Creates a new photo with the specified id
+	 *  @methodtype factory
 	 */
-	public Photo createPhoto(PhotoId id) {
-		return new Photo(id);
+	public Photo createPhoto(TYPE type,PhotoId id) {
+		switch (type){
+			case MUSHROOM: return new MushroomPhoto(id);
+			case PHOTO:
+			default: return new Photo(id);
+
+		}
+	}
+
+	/**
+	 *  Creates a new photo with the specified id and location
+	 * @methodtype factory
+	 */
+	public Photo createPhoto(TYPE type,PhotoId id, double latitude, double longitude) {
+		switch (type){
+			case MUSHROOM: return new MushroomPhoto(id, latitude, longitude);
+			case PHOTO:
+			default: return new Photo(id, latitude, longitude);
+
+		}
 	}
 
 	/**
