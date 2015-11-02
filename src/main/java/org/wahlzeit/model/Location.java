@@ -1,6 +1,18 @@
 package org.wahlzeit.model;
+import org.wahlzeit.services.ObjectManager;
+import com.google.appengine.api.datastore.Key;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Parent;
 
+@Entity
 public class Location {
+
+    // Datastore values
+    @Id
+    private String idLong = "location";
+    @Parent
+    Key parent = ObjectManager.applicationRootKey;
 
     private String name;
     private Coordinate coordinate;

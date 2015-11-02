@@ -28,6 +28,7 @@ public class OfyService {
 		factory().register(PhotoCase.class);
 		factory().register(ImageWrapper.class);
 		factory().register(Coordinate.class);
+		factory().register(Location.class);
 	}
 
 	public static Objectify ofy() {
