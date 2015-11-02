@@ -21,7 +21,7 @@ public class Location {
      * @methodtype constructor
      */
     public Location() {
-        this(Coordinate.DEFAULT_LATITUDE, Coordinate.DEFAULT_LONGITUDE);
+        this(SphericCoordinate.DEFAULT_LATITUDE, SphericCoordinate.DEFAULT_LONGITUDE);
     }
 
     /**
@@ -35,7 +35,7 @@ public class Location {
      * @methodtype constructor
      */
     public Location(double latitude, double longitude, String name) {
-        this.coordinate = new Coordinate(latitude, longitude);
+        this.coordinate = new SphericCoordinate(latitude, longitude);
         this.name = name;
     }
 

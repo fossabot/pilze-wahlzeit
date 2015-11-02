@@ -27,7 +27,7 @@ public class OfyService {
 		factory().register(Guest.class);
 		factory().register(PhotoCase.class);
 		factory().register(ImageWrapper.class);
-		factory().register(Coordinate.class);
+		factory().register(SphericCoordinate.class);
 		factory().register(Location.class);
 	}
 
