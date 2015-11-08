@@ -1,29 +1,21 @@
 package org.wahlzeit.model;
 
-import com.google.appengine.api.datastore.Key;
-import com.googlecode.objectify.annotation.Entity;
-import com.googlecode.objectify.annotation.Id;
-import com.googlecode.objectify.annotation.Parent;
+import com.googlecode.objectify.annotation.Subclass;
 import org.wahlzeit.CoordinateHelper;
-import org.wahlzeit.services.ObjectManager;
 
-@Entity
+@Subclass(index = true)
 public class SphericCoordinate implements Coordinate{
 
-    @Id
-    private String idLong = "sphericCoordinate";
-    @Parent
-    Key parent = ObjectManager.applicationRootKey;
 
     static final double DEFAULT_LATITUDE = 0.0;
     static final double DEFAULT_LONGITUDE = 0.0;
 
     private double latitude;
     private double longitude;
-    private double radius = 6371.0; // km
+    private double radius = 6371.0; // earth radius in km
 
     /**
-     * Represent a location by latitude and longitude values.
+     * @methodtype constructor
      */
     public SphericCoordinate(double latitude, double longitude){
         checkValidLat(latitude);
@@ -32,8 +24,13 @@ public class SphericCoordinate implements Coordinate{
         this.longitude = longitude;
     }
 
+    /**
+     * @methodtype constructor
+     */
     public SphericCoordinate(double latitude, double longitude, double radius){
         this(latitude, longitude);
+
+        checkValidRadius(radius);
         this.radius = radius;
     }
 
@@ -122,8 +119,8 @@ public class SphericCoordinate implements Coordinate{
 
         double r = Math.sqrt(x*x + y*y + z*z);
 
-        double lat = Math.atan2(z, Math.sqrt(x * x + y * y));
-        double lng = Math.atan2(y, x);
+        double lat = Math.toDegrees(Math.acos(z / r));
+        double lng = Math.toDegrees(Math.atan2(y, x));
         return new SphericCoordinate(lat,lng,r);
     }
 
@@ -155,4 +152,9 @@ public class SphericCoordinate implements Coordinate{
         }
     }
 
+    private void checkValidRadius(double r) throws IllegalArgumentException{
+        if(r < 0.0){
+            throw new IllegalArgumentException();
+        }
+    }
 }

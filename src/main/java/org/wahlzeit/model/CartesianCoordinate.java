@@ -1,23 +1,25 @@
 package org.wahlzeit.model;
 
-import com.google.appengine.api.datastore.Key;
-import com.googlecode.objectify.annotation.Entity;
-import com.googlecode.objectify.annotation.Id;
-import com.googlecode.objectify.annotation.Parent;
+import com.googlecode.objectify.annotation.Subclass;
 import org.wahlzeit.CoordinateHelper;
-import org.wahlzeit.services.ObjectManager;
 
-@Entity
+@Subclass(index = true)
 public class CartesianCoordinate implements Coordinate {
-    @Id
-    private String idLong = "cartesianCoordinate";
-    @Parent
-    Key parent = ObjectManager.applicationRootKey;
 
     private double x;
     private double y;
     private double z;
 
+    /**
+     * @methodtype constructor
+     */
+    public CartesianCoordinate() {
+        this(0.0, 0.0, 0.0);
+    }
+
+    /**
+     * @methodtype constructor
+     */
     public CartesianCoordinate(double x, double y, double z){
         this.x = x;
         this.y = y;
@@ -46,13 +48,13 @@ public class CartesianCoordinate implements Coordinate {
     }
 
     private CartesianCoordinate doSphericToCartesian(SphericCoordinate sphericCoord){
-        double lat = sphericCoord.getLatitude();
-        double lng = sphericCoord.getLongitude();
-        double r = sphericCoord.getRadius();
+        double lat = Math.toRadians(sphericCoord.getLatitude());
+        double lng = Math.toRadians(sphericCoord.getLongitude());
+        double radius = sphericCoord.getRadius();
 
-        double x = r * Math.cos(lat) * Math.cos(lng);
-        double y = r * Math.cos(lat) * Math.sin(lng);
-        double z = r * Math.cos(lat);
+        double x = radius * Math.cos(lng) * Math.sin(lat);
+        double y = radius * Math.sin(lng) * Math.sin(lat);
+        double z = radius * Math.cos(lat);
         return new CartesianCoordinate(x,y,z);
     }
 
