@@ -1,10 +1,9 @@
 package org.wahlzeit.model;
 
 import com.googlecode.objectify.annotation.Subclass;
-import org.wahlzeit.CoordinateHelper;
 
 @Subclass(index = true)
-public class CartesianCoordinate implements Coordinate {
+public class CartesianCoordinate extends AbstractCoordinate {
 
     private double x;
     private double y;
@@ -27,45 +26,18 @@ public class CartesianCoordinate implements Coordinate {
     }
 
     @Override
-    public double getDistance(Coordinate coordinate) {
-        CartesianCoordinate cartCoord = transformCoordinateToCartesian(coordinate);
-
-        double dx = x - cartCoord.getX();
-        double dy = y - cartCoord.getY();
-        double dz = z - cartCoord.getZ();
-
-        return Math.sqrt(dx*dx + dy*dy + dz*dz);
-    }
-
-    private CartesianCoordinate transformCoordinateToCartesian(Coordinate coordinate){
-        if(coordinate instanceof SphericCoordinate){
-            return doSphericToCartesian((SphericCoordinate)coordinate);
-        } else if(coordinate instanceof CartesianCoordinate){
-            return (CartesianCoordinate)coordinate;
-        } else {
-            throw new IllegalArgumentException("unknown coordinate type");
-        }
-    }
-
-    private CartesianCoordinate doSphericToCartesian(SphericCoordinate sphericCoord){
-        double lat = Math.toRadians(sphericCoord.getLatitude());
-        double lng = Math.toRadians(sphericCoord.getLongitude());
-        double radius = sphericCoord.getRadius();
-
-        double x = radius * Math.cos(lng) * Math.sin(lat);
-        double y = radius * Math.sin(lng) * Math.sin(lat);
-        double z = radius * Math.cos(lat);
-        return new CartesianCoordinate(x,y,z);
+    public double getCartesianX() {
+        return getX();
     }
 
     @Override
-    public boolean isEqual(Coordinate coordinate) {
-        CartesianCoordinate cartCoord = transformCoordinateToCartesian(coordinate);
-        boolean eqX = CoordinateHelper.isDoubleEqual(x, cartCoord.getX());
-        boolean eqY = CoordinateHelper.isDoubleEqual(y, cartCoord.getY());
-        boolean eqZ = CoordinateHelper.isDoubleEqual(z, cartCoord.getZ());
+    public double getCartesianY() {
+        return getY();
+    }
 
-        return eqX && eqY && eqZ;
+    @Override
+    public double getCartesianZ() {
+        return getZ();
     }
 
     /**

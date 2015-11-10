@@ -61,7 +61,9 @@ public class SphericCoordinateTest {
         sphericCoord.setLongitude(11.028427);
 
         SphericCoordinate other = new SphericCoordinate(37.427994,-122.170255);
+        assertEquals(9304.454815, sphericCoord.getDistance(other), DELTA);
 
+        Coordinate coord = new SphericCoordinate(37.427994,-122.170255);
         assertEquals(9304.454815, sphericCoord.getDistance(other), DELTA);
     }
 
