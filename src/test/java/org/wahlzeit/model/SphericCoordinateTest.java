@@ -77,6 +77,21 @@ public class SphericCoordinateTest {
         assertEquals(0.0, distanceSpheric, DELTA);
     }
 
+    @Test
+    public void testGetCartesianX(){
+        assertEquals(cartesianCoord.getX(),sphericCoord.getCartesianX(),DELTA);
+    }
+
+    @Test
+    public void testGetCartesianY(){
+        assertEquals(cartesianCoord.getY(),sphericCoord.getCartesianY(),DELTA);
+    }
+
+    @Test
+    public void testGetCartesianZ(){
+        assertEquals(cartesianCoord.getZ(),sphericCoord.getCartesianZ(),DELTA);
+    }
+
     @Test(expected = IllegalArgumentException.class)
     public void testLatitudeOutOfHigherBounds() {
         sphericCoord = new SphericCoordinate(90.1, 0);

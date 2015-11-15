@@ -84,4 +84,19 @@ public class CartesianCoordinateTest {
         assertEquals(0.0, distanceCartToSpheric, DELTA);
         assertEquals(0.0, distanceSphericToCart, DELTA);
     }
+
+    @Test
+    public void testGetCartesianX(){
+        assertEquals(cartesianCoord.getX(),cartesianCoord.getCartesianX(),DELTA);
+    }
+
+    @Test
+    public void testGetCartesianY(){
+        assertEquals(cartesianCoord.getY(),cartesianCoord.getCartesianY(),DELTA);
+    }
+
+    @Test
+    public void testGetCartesianZ(){
+        assertEquals(cartesianCoord.getZ(),cartesianCoord.getCartesianZ(),DELTA);
+    }
 }
