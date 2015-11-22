@@ -23,10 +23,7 @@ package org.wahlzeit.model;
 import com.google.api.client.util.ArrayMap;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.images.Image;
-import com.googlecode.objectify.annotation.Entity;
-import com.googlecode.objectify.annotation.Id;
-import com.googlecode.objectify.annotation.Ignore;
-import com.googlecode.objectify.annotation.Parent;
+import com.googlecode.objectify.annotation.*;
 import org.wahlzeit.services.DataObject;
 import org.wahlzeit.services.EmailAddress;
 import org.wahlzeit.services.Language;
@@ -125,6 +122,7 @@ public class Photo extends DataObject {
 	/**
 	 * Location as latitude and longitude values
 	 */
+	@Container
 	protected Location location;
 
 

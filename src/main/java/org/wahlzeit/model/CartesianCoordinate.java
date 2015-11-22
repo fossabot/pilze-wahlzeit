@@ -20,25 +20,52 @@ public class CartesianCoordinate extends AbstractCoordinate {
      * @methodtype constructor
      */
     public CartesianCoordinate(double x, double y, double z){
+        // preconditions
+        assertIsValidDouble(x);
+        assertIsValidDouble(y);
+        assertIsValidDouble(z);
+
         this.x = x;
         this.y = y;
         this.z = z;
+
+        // postconditions
+        assertClassInvariants();
     }
 
+    /**
+     * @methodtype query
+     */
     @Override
     public double getCartesianX() {
         return getX();
     }
 
+    /**
+     * @methodtype query
+     */
     @Override
     public double getCartesianY() {
         return getY();
     }
 
+    /**
+     * @methodtype query
+     */
     @Override
     public double getCartesianZ() {
         return getZ();
     }
+
+    /**
+     * @methodtype assertion
+     */
+    protected void assertClassInvariants() {
+        assertIsValidDouble(x);
+        assertIsValidDouble(y);
+        assertIsValidDouble(z);
+    }
+
 
     /**
      * @methodtype get

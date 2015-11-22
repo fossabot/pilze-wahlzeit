@@ -18,10 +18,15 @@ public class SphericCoordinate extends AbstractCoordinate{
      * @methodtype constructor
      */
     public SphericCoordinate(double latitude, double longitude){
-        checkValidLat(latitude);
-        checkValidLng(longitude);
+        // precondtitions
+        assertIsValidLatitude(latitude);
+        assertIsValidLongitude(longitude);
+
         this.latitude = latitude;
         this.longitude = longitude;
+
+        //postconditions
+        assertClassInvariants();
     }
 
     /**
@@ -30,8 +35,13 @@ public class SphericCoordinate extends AbstractCoordinate{
     public SphericCoordinate(double latitude, double longitude, double radius){
         this(latitude, longitude);
 
-        checkValidRadius(radius);
+        // preconditions
+        assertIsValidRadius(radius);
+
         this.radius = radius;
+
+        // postconditions
+        assertClassInvariants();
     }
 
     /**
@@ -44,8 +54,13 @@ public class SphericCoordinate extends AbstractCoordinate{
      * @methodtype set
      */
     public void setLongitude(double longitude) {
-        checkValidLng(longitude);
+        // preconditions
+        assertIsValidLongitude(longitude);
+
         this.longitude = longitude;
+
+        // postconditions
+        assertClassInvariants();
     }
 
     /**
@@ -59,8 +74,13 @@ public class SphericCoordinate extends AbstractCoordinate{
      * @methodtype set
      */
     public void setLatitude(double latitude) {
-        checkValidLat(latitude);
+        // preconditions
+        assertIsValidLatitude(latitude);
+
         this.latitude = latitude;
+
+        // postconditions
+        assertClassInvariants();
     }
 
     /**
@@ -84,6 +104,9 @@ public class SphericCoordinate extends AbstractCoordinate{
      * @return distance in km
      */
     public double getDistance(SphericCoordinate other){
+        // preconditions
+        assertIsNotNull(other);
+
         double lat = Math.toRadians(other.getLatitude() - this.getLatitude());
         double lon = Math.toRadians(other.getLongitude() - this.getLongitude());
 
@@ -92,53 +115,114 @@ public class SphericCoordinate extends AbstractCoordinate{
         double secondSum = 2 * Math.atan2(Math.sqrt(firstSum), Math.sqrt(1 - firstSum));
         double realDistanceInKM = radius * secondSum;
 
+        // postconditions
+        assertIsValidDistance(realDistanceInKM);
         return realDistanceInKM;
     }
 
+    /**
+     * @methodtype query
+     */
     @Override
     public double getCartesianX() {
-        return radius *
+        double cartX = radius *
                 Math.cos(Math.toRadians(longitude)) *
                 Math.sin(Math.toRadians(latitude));
+
+        // postconditions
+        assertIsValidDouble(cartX);
+        return cartX;
     }
 
+    /**
+     * @methodtype query
+     */
     @Override
     public double getCartesianY() {
-        return radius *
+        double cartY = radius *
                 Math.sin(Math.toRadians(longitude)) *
                 Math.sin(Math.toRadians(latitude));
+
+        // postconditions
+        assertIsValidDouble(cartY);
+        return cartY;
     }
 
+    /**
+     * @methodtype query
+     */
     @Override
     public double getCartesianZ() {
-        return radius * Math.cos(Math.toRadians(latitude));
+        double cartZ = radius * Math.cos(Math.toRadians(latitude));
+
+        // postconditions
+        assertIsValidDouble(cartZ);
+        return cartZ;
     }
 
+    /**
+     * @methodtype query
+     */
     public double getLatitudinalDistance(SphericCoordinate other){
-        checkNotNull(other);
-        return Math.abs(getLatitude() - other.getLatitude());
+        // preconditions
+        assertIsNotNull(other);
+
+        double distance = Math.abs(getLatitude() - other.getLatitude());
+
+        // postconditions
+        assertIsValidDistance(distance);
+        return distance;
     }
 
+    /**
+     * @methodtype query
+     */
     public double getLongitudinalDistance(SphericCoordinate other){
-        checkNotNull(other);
-        return Math.abs(getLongitude() - other.getLongitude());
+        // preconditions
+        assertIsNotNull(other);
+
+        double distance = Math.abs(getLongitude() - other.getLongitude());
+
+        // postconditions
+        assertIsValidDistance(distance);
+        return distance;
     }
 
-    private void checkValidLat(double lat) throws IllegalArgumentException{
-        if (lat < -90 || lat > 90 || Double.isNaN(lat)) {
+
+    /**
+     * @methodtype assertion
+     */
+    protected void assertClassInvariants() {
+        assertIsValidDouble(latitude);
+        assertIsValidDouble(longitude);
+        assertIsValidDouble(radius);
+    }
+
+    /**
+     * @methodtype assertion
+     */
+    private void assertIsValidLatitude(double lat) throws IllegalArgumentException{
+        assertIsValidDouble(lat);
+        if (lat < -90 || lat > 90) {
             throw new IllegalArgumentException();
         }
     }
 
-    private void checkValidLng(double lng) throws IllegalArgumentException{
-        if (lng < -180 || lng > 180 || Double.isNaN(lng)) {
+    /**
+     * @methodtype assertion
+     */
+    private void assertIsValidLongitude(double lng) throws IllegalArgumentException{
+        assertIsValidDouble(lng);
+        if (lng < -180 || lng > 180) {
             throw new IllegalArgumentException();
         }
     }
 
-    private void checkValidRadius(double r) throws IllegalArgumentException{
-        if(r < 0.0){
-            throw new IllegalArgumentException();
-        }
+    /**
+     * @methodtype assertion
+     */
+    private void assertIsValidRadius(double r) throws IllegalArgumentException{
+        assertIsValidDouble(r);
+        assertIsNotNegativeDouble(r);
     }
 }
