@@ -154,7 +154,7 @@ public class GcsAdapter extends ImageStorage {
 	}
 
 
-	@Pattern(name = "Builder", participants = {"GcsAdapter","Builder"})
+	@Pattern(name = "Builder", participants = {"Builder", "ConcreteBuilder"})
 	public static class Builder {
 		GcsService gcsService;
 		private String bucketName;
