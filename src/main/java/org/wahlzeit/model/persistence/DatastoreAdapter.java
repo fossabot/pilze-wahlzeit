@@ -28,7 +28,6 @@ import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import org.wahlzeit.services.LogBuilder;
 import org.wahlzeit.services.OfyService;
-
 import java.io.IOException;
 import java.io.Serializable;
 import java.security.InvalidParameterException;
@@ -39,6 +38,7 @@ import java.util.logging.Logger;
  * 
  * @review
  */
+
 public class DatastoreAdapter extends ImageStorage {
 
 	private static final Logger log = Logger.getLogger(DatastoreAdapter.class.getName());
