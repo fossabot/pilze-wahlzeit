@@ -3,6 +3,8 @@ package org.wahlzeit.model;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Test cases for the SphericCoordinate class.
@@ -18,13 +20,12 @@ public class SphericCoordinateTest {
 
     @Before
     public void setUp(){
+        sphericCoord = SphericCoordinate.getInstance(49.599937, 11.006300, SphericCoordinate.EARTH_RADIUS);
+        sphericOtherCoord = SphericCoordinate.getInstance(34.052235, -118.243683, SphericCoordinate.EARTH_RADIUS);
 
-        sphericCoord = new SphericCoordinate(49.599937, 11.006300);
-        sphericOtherCoord = new SphericCoordinate(34.052235, -118.243683);
-
-        cartesianCoord = new CartesianCoordinate(4762.5137725, 926.2823628,
+        cartesianCoord = CartesianCoordinate.getInstance(4762.5137725, 926.2823628,
                 4129.1772245);
-        cartesianOtherCoord = new CartesianCoordinate(-1688.1891415,
+        cartesianOtherCoord = CartesianCoordinate.getInstance(-1688.1891415,
                 -3142.7037588, 5278.5482385);
     }
 
@@ -32,11 +33,11 @@ public class SphericCoordinateTest {
     public void testGetterSetter(){
         double lat = 30.3;
         double lng = 40.4;
-        sphericCoord.setLatitude(lat);
-        sphericCoord.setLongitude(lng);
+        SphericCoordinate sphericNewLat = sphericCoord.setLatitude(lat);
+        assertEquals(lat, sphericNewLat.getLatitude(),DELTA);
 
-        assertEquals(lat, sphericCoord.getLatitude(),DELTA);
-        assertEquals(lng, sphericCoord.getLongitude(),DELTA);
+        SphericCoordinate sphericNewLng = sphericCoord.setLongitude(lng);
+        assertEquals(lng, sphericNewLng.getLongitude(),DELTA);
     }
 
     @Test
@@ -60,11 +61,11 @@ public class SphericCoordinateTest {
         sphericCoord.setLatitude(49.572680);
         sphericCoord.setLongitude(11.028427);
 
-        SphericCoordinate other = new SphericCoordinate(37.427994,-122.170255);
-        assertEquals(9304.454815, sphericCoord.getDistance(other), DELTA);
+        SphericCoordinate other = SphericCoordinate.getInstance(37.427994, -122.170255, SphericCoordinate.EARTH_RADIUS);
+        assertEquals(9301.062154, sphericCoord.getDistance(other), DELTA);
 
-        Coordinate coord = new SphericCoordinate(37.427994,-122.170255);
-        assertEquals(9304.454815, sphericCoord.getDistance(other), DELTA);
+        Coordinate coord = SphericCoordinate.getInstance(37.427994, -122.170255, SphericCoordinate.EARTH_RADIUS);
+        assertEquals(9301.062154, sphericCoord.getDistance(other), DELTA);
     }
 
     @Test
@@ -92,29 +93,50 @@ public class SphericCoordinateTest {
         assertEquals(cartesianCoord.getZ(),sphericCoord.getCartesianZ(),DELTA);
     }
 
+    @Test
+    public void testIsSame(){
+        SphericCoordinate other = SphericCoordinate.getInstance(49.599937, 11.006300, SphericCoordinate.EARTH_RADIUS);
+        assertTrue(sphericCoord.isSame(other));
+        assertFalse(sphericCoord.isSame(cartesianCoord));
+    }
+
+    @Test
+    public void testEquals(){
+        SphericCoordinate other = SphericCoordinate.getInstance(49.599937, 11.006300, SphericCoordinate.EARTH_RADIUS);
+        assertTrue(sphericCoord.equals(other));
+        assertTrue(sphericCoord.equals(cartesianCoord));
+    }
+
+    @Test
+    public void testIsEquals(){
+        SphericCoordinate other = SphericCoordinate.getInstance(49.599937, 11.006300, SphericCoordinate.EARTH_RADIUS);
+        assertTrue(sphericCoord.isEqual(other));
+        assertTrue(sphericCoord.isEqual(cartesianCoord));
+    }
+
     @Test(expected = IllegalArgumentException.class)
     public void testLatitudeOutOfHigherBounds() {
-        sphericCoord = new SphericCoordinate(90.1, 0);
+        sphericCoord = SphericCoordinate.getInstance(90.1, 0, SphericCoordinate.EARTH_RADIUS);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testLatitudeOutOfLowerBounds() {
-        sphericCoord = new SphericCoordinate(-90.1, 0);
+        sphericCoord = SphericCoordinate.getInstance(-90.1, 0,SphericCoordinate.EARTH_RADIUS);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testLongitudeOutOfHigherBounds() {
-        sphericCoord = new SphericCoordinate(45, 180.1);
+        sphericCoord = SphericCoordinate.getInstance(45, 180.1, SphericCoordinate.EARTH_RADIUS);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testLongitudeOutOfLowerBounds() {
-        sphericCoord = new SphericCoordinate(45, -180.1);
+        sphericCoord = SphericCoordinate.getInstance(45, -180.1, SphericCoordinate.EARTH_RADIUS);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testRadiusOutOfBounds() {
-        sphericCoord = new SphericCoordinate(45, 40, -20);
+        sphericCoord = SphericCoordinate.getInstance(45, 40, -20);
     }
 
 }

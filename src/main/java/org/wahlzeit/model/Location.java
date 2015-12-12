@@ -37,7 +37,7 @@ public class Location {
      * @methodtype constructor
      */
     public Location(double latitude, double longitude, String name) {
-        this.coordinate = new SphericCoordinate(latitude, longitude);
+        this.coordinate = SphericCoordinate.getInstance(latitude, longitude,SphericCoordinate.EARTH_RADIUS);
         this.name = name;
     }
 

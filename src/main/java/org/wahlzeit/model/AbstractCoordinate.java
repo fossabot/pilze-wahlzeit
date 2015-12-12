@@ -1,6 +1,8 @@
 package org.wahlzeit.model;
 
 
+import java.util.HashMap;
+
 public abstract class AbstractCoordinate implements Coordinate {
 
     protected final static double DELTA = 0.0000001;
@@ -38,6 +40,37 @@ public abstract class AbstractCoordinate implements Coordinate {
         // postconditions
         // boolean value doesn't need to be checked
         return eqX && eqY && eqZ;
+    }
+
+    /**
+     * @methodtype query
+     */
+    @Override
+    public boolean equals(Object other){
+        // preconditions
+        assertIsNotNull(other);
+
+        boolean result;
+        if (other instanceof Coordinate) {
+            result = isEqual((Coordinate) other);
+        } else {
+            result = false;
+        }
+        return result;
+    }
+
+    /**
+     * @methodtype query
+     */
+    public boolean isSame(Coordinate coordinate) {
+        // preconditions
+        assertIsNotNull(coordinate);
+        assertIsValidCoordinate(coordinate);
+
+        boolean eq = (this == coordinate);
+        // postconditions
+        // boolean value doesn't need to be checked
+        return eq;
     }
 
     /**

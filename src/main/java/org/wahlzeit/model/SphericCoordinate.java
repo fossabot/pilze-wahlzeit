@@ -2,8 +2,12 @@ package org.wahlzeit.model;
 
 import com.googlecode.objectify.annotation.Subclass;
 
+import java.util.HashMap;
+
 @Subclass(index = true)
 public class SphericCoordinate extends AbstractCoordinate{
+
+    private static final HashMap<String, SphericCoordinate> instanceMap = new HashMap<String, SphericCoordinate>();
 
 
     static final double DEFAULT_LATITUDE = 0.0;
@@ -17,7 +21,7 @@ public class SphericCoordinate extends AbstractCoordinate{
     /**
      * @methodtype constructor
      */
-    public SphericCoordinate(double latitude, double longitude){
+    private SphericCoordinate(double latitude, double longitude){
         // precondtitions
         assertIsValidLatitude(latitude);
         assertIsValidLongitude(longitude);
@@ -32,7 +36,7 @@ public class SphericCoordinate extends AbstractCoordinate{
     /**
      * @methodtype constructor
      */
-    public SphericCoordinate(double latitude, double longitude, double radius){
+    private SphericCoordinate(double latitude, double longitude, double radius){
         this(latitude, longitude);
 
         // preconditions
@@ -44,6 +48,22 @@ public class SphericCoordinate extends AbstractCoordinate{
         assertClassInvariants();
     }
 
+    public static SphericCoordinate getInstance(double lat, double lng, double r){
+        String key = lat+";"+lng+";"+r;
+        SphericCoordinate result = instanceMap.get(key);
+
+        if (result == null) {
+            synchronized (instanceMap) {
+                result = instanceMap.get(key);;
+                if (result == null) {
+                    result = new SphericCoordinate(lat, lng, r);
+                    instanceMap.put(key, result);
+                }
+            }
+        }
+        return result;
+    };
+
     /**
      * @methodtype get
      */
@@ -53,14 +73,16 @@ public class SphericCoordinate extends AbstractCoordinate{
     /**
      * @methodtype set
      */
-    public void setLongitude(double longitude) {
+    public SphericCoordinate setLongitude(double longitude) {
         // preconditions
         assertIsValidLongitude(longitude);
 
-        this.longitude = longitude;
+        SphericCoordinate result = SphericCoordinate.getInstance(getLatitude(),longitude,getRadius());
 
         // postconditions
         assertClassInvariants();
+        assertIsValidCoordinate(result);
+        return result;
     }
 
     /**
@@ -73,14 +95,16 @@ public class SphericCoordinate extends AbstractCoordinate{
     /**
      * @methodtype set
      */
-    public void setLatitude(double latitude) {
+    public SphericCoordinate setLatitude(double latitude) {
         // preconditions
         assertIsValidLatitude(latitude);
 
-        this.latitude = latitude;
+        SphericCoordinate result = SphericCoordinate.getInstance(latitude,getLongitude(),getRadius());
 
         // postconditions
         assertClassInvariants();
+        assertIsValidCoordinate(result);
+        return result;
     }
 
     /**
@@ -93,8 +117,15 @@ public class SphericCoordinate extends AbstractCoordinate{
     /**
      * @methodtype set
      */
-    public void setRadius(double radius){
-        this.radius = radius;
+    public SphericCoordinate setRadius(double radius){
+        // preconditions
+        assertIsValidRadius(radius);
+
+        SphericCoordinate result = SphericCoordinate.getInstance(getLatitude(),getLongitude(),radius);
+
+        // postconditions
+        assertIsValidCoordinate(result);
+        return result;
     }
 
     /**

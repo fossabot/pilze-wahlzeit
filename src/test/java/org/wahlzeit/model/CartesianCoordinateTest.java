@@ -4,6 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Test cases for the CartesianCoordinate class.
@@ -22,26 +24,18 @@ public class CartesianCoordinateTest {
 
     @Before
     public void setUp() {
-        cartesianCoord = new CartesianCoordinate(4762.5137725, 926.2823628,
+        cartesianCoord = CartesianCoordinate.getInstance(4762.5137725, 926.2823628,
                 4129.1772245);
-        cartesianOtherCoord = new CartesianCoordinate(-1688.1891415,
+        cartesianOtherCoord = CartesianCoordinate.getInstance(-1688.1891415,
                 -3142.7037588, 5278.5482385);
 
-        sphericCoord = new SphericCoordinate(49.599937, 11.006300);
-        sphericOtherCoord = new SphericCoordinate(34.052235, -118.243683);
-    }
-
-    @Test
-    public void testDefaultConstructor() {
-        CartesianCoordinate coordinate = new CartesianCoordinate();
-        assertEquals(0.0, coordinate.getX(), DELTA);
-        assertEquals(0.0, coordinate.getY(), DELTA);
-        assertEquals(0.0, coordinate.getZ(), DELTA);
+        sphericCoord = SphericCoordinate.getInstance(49.599937, 11.006300, SphericCoordinate.EARTH_RADIUS);
+        sphericOtherCoord = SphericCoordinate.getInstance(34.052235, -118.243683, SphericCoordinate.EARTH_RADIUS);
     }
 
     @Test
     public void testConstructorWithArguments() {
-        CartesianCoordinate coordinate = new CartesianCoordinate(7000.0, 250.0,
+        CartesianCoordinate coordinate = CartesianCoordinate.getInstance(7000.0, 250.0,
                 3.7);
         assertEquals(7000.0, coordinate.getX(), DELTA);
         assertEquals(250.0, coordinate.getY(), DELTA);
@@ -83,6 +77,30 @@ public class CartesianCoordinateTest {
                 .getDistance(cartesianCoord);
         assertEquals(0.0, distanceCartToSpheric, DELTA);
         assertEquals(0.0, distanceSphericToCart, DELTA);
+    }
+
+    @Test
+    public void testIsSame(){
+        CartesianCoordinate other = CartesianCoordinate.getInstance(4762.5137725, 926.2823628,
+                4129.1772245);
+        assertTrue(cartesianCoord.isSame(other));
+        assertFalse(sphericCoord.isSame(cartesianCoord));
+    }
+
+    @Test
+    public void testEquals(){
+        CartesianCoordinate other = CartesianCoordinate.getInstance(4762.5137725, 926.2823628,
+                4129.1772245);
+        assertTrue(cartesianCoord.equals(other));
+        assertTrue(sphericCoord.equals(cartesianCoord));
+    }
+
+    @Test
+    public void testIsEquals(){
+        CartesianCoordinate other = CartesianCoordinate.getInstance(4762.5137725, 926.2823628,
+                4129.1772245);
+        assertTrue(cartesianCoord.isEqual(other));
+        assertTrue(sphericCoord.isEqual(cartesianCoord));
     }
 
     @Test
