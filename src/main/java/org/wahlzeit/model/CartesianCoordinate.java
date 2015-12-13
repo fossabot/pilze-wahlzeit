@@ -37,6 +37,9 @@ public class CartesianCoordinate extends AbstractCoordinate {
         assertClassInvariants();
     }
 
+    /**
+     * @methodtype helper
+     */
     public static CartesianCoordinate getInstance(double cartesianX, double cartesianY, double cartesianZ){
         String key = cartesianX+";"+cartesianY+";"+cartesianZ;
         CartesianCoordinate result = instanceMap.get(key);

@@ -48,6 +48,9 @@ public class SphericCoordinate extends AbstractCoordinate{
         assertClassInvariants();
     }
 
+    /**
+     * @methodtype helper
+     */
     public static SphericCoordinate getInstance(double lat, double lng, double r){
         String key = lat+";"+lng+";"+r;
         SphericCoordinate result = instanceMap.get(key);
