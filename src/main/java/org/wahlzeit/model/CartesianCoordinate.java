@@ -9,9 +9,9 @@ public class CartesianCoordinate extends AbstractCoordinate {
 
     private static final HashMap<String, CartesianCoordinate> instanceMap = new HashMap<String, CartesianCoordinate>();
 
-    private double x;
-    private double y;
-    private double z;
+    private final double x;
+    private final double y;
+    private final double z;
 
     /**
      * @methodtype constructor
@@ -46,7 +46,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 
         if (result == null) {
             synchronized (instanceMap) {
-                result = instanceMap.get(key);;
+                result = instanceMap.get(key);
                 if (result == null) {
                     result = new CartesianCoordinate(cartesianX, cartesianY, cartesianZ);
                     instanceMap.put(key, result);

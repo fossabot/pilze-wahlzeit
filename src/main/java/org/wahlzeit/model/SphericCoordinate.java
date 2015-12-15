@@ -14,34 +14,22 @@ public class SphericCoordinate extends AbstractCoordinate{
     static final double DEFAULT_LONGITUDE = 0.0;
     static final double EARTH_RADIUS = 6371.0;
 
-    private double latitude;
-    private double longitude;
-    private double radius = EARTH_RADIUS;
+    private final double latitude;
+    private final double longitude;
+    private final double radius;
 
-    /**
-     * @methodtype constructor
-     */
-    private SphericCoordinate(double latitude, double longitude){
-        // precondtitions
-        assertIsValidLatitude(latitude);
-        assertIsValidLongitude(longitude);
-
-        this.latitude = latitude;
-        this.longitude = longitude;
-
-        //postconditions
-        assertClassInvariants();
-    }
 
     /**
      * @methodtype constructor
      */
     private SphericCoordinate(double latitude, double longitude, double radius){
-        this(latitude, longitude);
-
         // preconditions
+        assertIsValidLatitude(latitude);
+        assertIsValidLongitude(longitude);
         assertIsValidRadius(radius);
 
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.radius = radius;
 
         // postconditions
