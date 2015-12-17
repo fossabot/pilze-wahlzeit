@@ -14,8 +14,8 @@ public class MushroomManager {
     private MushroomManager(){
         // create default types
         createMushroomType("Pfifferlinge","Cantharellus",true);
-        createMushroomType("Fliegenpilz","lAmanita muscaria",false);
-        createMushroomType("Gifth?ubling","Galerina marginata",false);
+        createMushroomType("Fliegenpilz","Amanita muscaria",false);
+        createMushroomType("Gifthübling","Galerina marginata",false);
     }
 
     /**

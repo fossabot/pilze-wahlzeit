@@ -23,6 +23,14 @@ public class MushroomType {
     }
 
     /**
+     * @methodtype boolean query
+     */
+    public boolean isInstance(Mushroom mushroom) {
+        assertIsNotNull(mushroom);
+        return (mushroom.getType() == this);
+    }
+
+    /**
      * @methodtype get
      */
     public String getName(){
@@ -41,5 +49,14 @@ public class MushroomType {
      */
     public boolean getEatable(){
         return eatable;
+    }
+
+    /**
+     * @methodtype assertion
+     */
+    private void assertIsNotNull(Object value) {
+        if (value == null) {
+            throw new IllegalArgumentException();
+        }
     }
 }
