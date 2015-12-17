@@ -162,9 +162,9 @@ public class Photo extends DataObject {
 	/**
 	 * @methodtype constructor
 	 */
-	public Photo(PhotoId myId, double latitude, double longitude) {
+	public Photo(PhotoId myId, Location location) {
 		id = myId;
-		location = new Location(latitude,longitude);
+		this.location = location;
 		incWriteCount();
 	}
 

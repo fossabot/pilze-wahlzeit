@@ -47,8 +47,8 @@ public class MushroomPhotoFactory extends PhotoFactory{
      *  Creates a new photo with the specified id and location
      * @methodtype factory
      */
-    public Photo createPhoto(PhotoId id, double latitude, double longitude) {
-        return new MushroomPhoto(id, latitude, longitude);
+    public Photo createPhoto(PhotoId id, Location location) {
+        return new MushroomPhoto(id, location);
     }
 
 

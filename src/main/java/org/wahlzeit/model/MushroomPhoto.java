@@ -6,8 +6,7 @@ import com.googlecode.objectify.annotation.Subclass;
 public class MushroomPhoto extends Photo{
 
 
-    private String latinName;
-    private boolean eatable;
+        Mushroom mushroom;
 
     /**
      * @methodtype constructor
@@ -26,22 +25,22 @@ public class MushroomPhoto extends Photo{
     /**
      * @methodtype constructor
      */
-    public MushroomPhoto(PhotoId myId, double latitude, double longitude){
-        super(myId,latitude,longitude);
+    public MushroomPhoto(PhotoId myId, Location location){
+        super(myId,location);
     }
 
     /**
-     * @methodtype get
+     * @methodtype constructor
      */
-    public String getLatinName() {
-        return latinName;
+    public MushroomPhoto(PhotoId myId, Location location,String typeName){
+        super(myId,location);
+        mushroom = MushroomManager.getInstance().createMushroom(typeName);
     }
 
     /**
-     * @methodtype set
+     * @methodtype getter
      */
-    public void setLatinName(String latinName) {
-        this.latinName = latinName;
+    public Mushroom getMushroom(){
+        return mushroom;
     }
-
 }
