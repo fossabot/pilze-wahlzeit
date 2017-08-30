@@ -1,4 +1,6 @@
 # Wahlzeit: Open Source Software for Photo Rating Sites
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fandreas-bauer%2Fpilze-wahlzeit.svg?type=shield)](https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fandreas-bauer%2Fpilze-wahlzeit?ref=badge_shield)
+
 
 
 
@@ -58,3 +60,7 @@ For more information, please see http://github.com/dirkriehle/wahlzeit and http:
   5. If everything works out, you will find your project at https://yourproj.appspot.com
 
 Done!
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fandreas-bauer%2Fpilze-wahlzeit.svg?type=large)](https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fandreas-bauer%2Fpilze-wahlzeit?ref=badge_large)
